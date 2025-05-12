@@ -1,0 +1,85 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# Invensense ICM-20948 IMU driver
+#
+
+config INV_ICM20948
+	tristate "Invensense ICM-20948 IMU driver"
+	depends on (I2C || SPI)
+	select IIO_BUFFER
+	select IIO_TRIGGERED_BUFFER
+	help
+	  Say yes here to build support for the Invensense ICM-20948 
+	  9-axis IMU (3-axis accelerometer, 3-axis gyroscope, 3-axis magnetometer).
+
+	  The ICM-20948 is a System in Package (SiP) that combines a 3-axis
+	  gyroscope, 3-axis accelerometer, and an AK09916 3-axis magnetometer.
+	  
+	  This driver supports both I2C and SPI communication interfaces.
+	  
+	  This driver can also be built as a module. If so, the module for the
+	  core will be called inv_icm20948.
+
+config INV_ICM20948_I2C
+	tristate "Invensense ICM-20948 I2C Interface"
+	depends on INV_ICM20948 && I2C
+	help
+	  Say Y here to include support for I2C interface for Invensense ICM-20948
+	  IMU sensors.
+	  
+	  This provides the I2C bus interface for the Invensense ICM-20948 IMU 
+	  driver.
+	  
+	  To compile this driver as a module, choose M here. The module
+	  will be called inv_icm20948_i2c.
+
+config INV_ICM20948_SPI
+	tristate "Invensense ICM-20948 SPI Interface"
+	depends on INV_ICM20948 && SPI_MASTER
+	help
+	  Say Y here to include support for SPI interface for Invensense ICM-20948
+	  IMU sensors.
+	  
+	  This provides the SPI bus interface for the Invensense ICM-20948 IMU 
+	  driver.
+	  
+	  To compile this driver as a module, choose M here. The module
+	  will be called inv_icm20948_spi.
+
+config INV_ICM20948_MAGNETOMETER
+	bool "Invensense ICM-20948 Magnetometer Support"
+	depends on INV_ICM20948
+	default y
+	help
+	  Say Y here to include support for the AK09916 magnetometer
+	  integrated in the Invensense ICM-20948 IMU.
+	  
+	  The AK09916 is a 3-axis electronic magnetometer that can
+	  measure terrestrial magnetism in the range of ±4900μT.
+	  
+	  If unsure, say Y.
+
+config INV_ICM20948_TEMPERATURE
+	bool "Invensense ICM-20948 Temperature Sensor Support"
+	depends on INV_ICM20948
+	default y
+	help
+	  Say Y here to include support for the temperature sensor
+	  integrated in the Invensense ICM-20948 IMU.
+	  
+	  The temperature sensor can be used for temperature compensation
+	  of sensor readings.
+	  
+	  If unsure, say Y.
+
+config INV_ICM20948_DEBUG
+	bool "Enable debug features for Invensense ICM-20948"
+	depends on INV_ICM20948
+	help
+	  Say Y here to enable debug features in the Invensense ICM-20948
+	  driver.
+	  
+	  This enables additional sysfs entries and debugfs files for
+	  advanced debugging, including register access and firmware features.
+	  
+	  If unsure, say N.
